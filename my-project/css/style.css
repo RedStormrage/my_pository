@@ -1,0 +1,11 @@
+.box1 {
+    background-color: #bff
+}
+
+.box1 .box2 {
+    background-color: yellow
+}
+
+.box1 .box2 .box3 {
+    background-color: pink
+}

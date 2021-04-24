@@ -1,0 +1,66 @@
+// 外部容器样式
+@themeColor:#FF0000;
+.container {
+    background-color: #fff;
+    min-width: 1489px;
+    height: 1000px;
+    // 头部
+    .header {
+        min-width: 1349px;
+        height: 30px;
+        background-color: #E3E4E5;
+        .top_nav_outer_wrap {
+            height: 30px;
+            width: 1489px;
+            background-color: #E3E4E5;
+            margin:auto;
+            font:12px/1.5 Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,"\5B8B\4F53",sans-serif;
+            .top_nav_inner_wrap {
+                width: 1190px;
+                height: 30px;
+                background-color: #E3E4E5;
+                margin:auto;
+                color: #A3A3A3;
+                a{
+                    color: #A3A3A3;
+                    text-decoration: none;
+                }
+                .red{
+                    color: #FF0000;
+                }
+                .iconfont{
+                    vertical-align: bottom;
+                }
+                line-height: 30px;
+                .left_wrap{
+                    display: float;
+                    float: left;
+                    .iconfont{
+                        color: @themeColor;
+                    }
+                }
+                .right_wrap{
+                    display: float;
+                    float: right;
+                    ul{
+                        display:flex;
+                        justify-content: flex-end;
+                        .first{
+                            padding-right: 10px;
+                        }
+                        .line+li{
+                            padding: 0 7px;
+                        }
+                        .line{
+                            overflow: hidden;
+                            width: 1px;
+                            height: 10px;
+                            background-color: #CCCCCC;
+                            margin: 11px 5px 0
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
