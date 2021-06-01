@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    let app = Vue.createApp({
+      data(){
+        return {
+          message: 'hello world'
+        }
+      },
+      // 此处用了v-once，初次渲染页面的时候正常显示，如果message的值发生了，有了once，那么，标签内的内容不会随之更新改变
+      template:`<div v-once>{{message}}</div>`
+    })
+    app.mount("#root")
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  *{
+    margin:0;
+    padding:0;
+  }
+  li{
+    list-style:none;
+  }
+  img{
+    display:block
+  }
+  .wrap{
+    width: 600px;
+    height: 400px;
+    background-color: pink;
+    margin:50px auto;
+    overflow: hidden;
+    position: relative;
+  }
+  /* 图片容器 */
+  .wrap>.list{
+    width: 4200px;
+    height:100%;
+    position: absolute;
+    top: 0;
+    left: -600px;
+  }
+  .wrap>.list>li{
+    float: left;
+  }
+  .iconList{
+    position: absolute;
+    bottom:10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .iconList>li{
+    width: 15px;
+    height: 15px;
+    background-color: #bfc;
+    border-radius: 50%;
+    float: left;
+    margin-right:10px; 
+    border: 1px solid black;
+  }
+  .iconList>li.current{
+    background-color:grey;
+  }
+  .wrap>span{
+    position: absolute;
+    font-size: 25px;
+    color: #fff;
+    top: 50%;
+    transform:translateY(-50%);
+    width: 40px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    opacity: 0;
+    transition: .3s;
+  }
+  .wrap>span{
+    background-color: rgba(110,110,110,0.5);
+    transition:all .3s;
+    cursor:pointer
+  }
+  .wrap>.turningLeft{
+    left: 20px;
+  }
+  .wrap>.turningRight{
+    right: 20px;
+  }
+
+</style>
+<body>
+  <div class="wrap">
+    <ul class="list">
+      <li><img src="./imgs/5.jpg" alt=""></li>
+      <li><img src="./imgs/1.jpg" alt=""></li>
+      <li><img src="./imgs/2.jpg" alt=""></li>
+      <li><img src="./imgs/3.jpg" alt=""></li>
+      <li><img src="./imgs/4.jpg" alt=""></li>
+      <li><img src="./imgs/5.jpg" alt=""></li>
+      <li><img src="./imgs/1.jpg" alt=""></li>
+    </ul>
+    <ul class="iconList">
+      <li class="current"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <span class="turningRight"> > </span>
+    <span class="turningLeft"> < </span>
+  </div>
+  <script>
+    window.onload = function(){
+      let iconList = document.querySelectorAll('.iconList>li')
+      let wrap = document.querySelector('.wrap')
+      let spanNodes = document.querySelectorAll('.wrap span')
+      // 显示区域容器（移入移出的时候需要停止和重启自动轮播  控制左右两个按钮的隐藏）
+      // 图片容器(操作left值 用来切换图片)
+      // 左右两个按钮 (显示隐藏 切换图片)
+      // 小圆点集合 (高亮状态切换  点击小圆点 图片切换)
+      // 获取左箭头
+      let prev = document.querySelector('.turningLeft')
+      // 获取右箭头
+      let next = document.querySelector('.turningRight')
+      // 获取轮播图容器
+      let carouselWrap = document.querySelector('.wrap>.list')
+      // 定义图片宽度 
+      let PAGE_WIDTH = 600
+      // 动画总时长
+      let time = 3000
+      // 动画帧时长  总时长 / 帧时长 = 总帧数(步数)
+      let itemTime = 30 
+      // 显示图片张数 图片排列的倒数第二张
+      let show_img = iconList.length
+      // 定义变量保存上一次的值
+      let index = 0
+      let isMove = false
+      // 解决快速滑动bug
+      wrap.onmouseenter = function(){
+        // for(var i = 0; i < spanNodes.length; i++){
+        //   spanNodes[i].style.opacity = '1'
+        // }
+        spanNodes[0].style.opacity = '1'
+        spanNodes[1].style.opacity = '1'
+        clearInterval(autoTimer)
+      }
+      wrap.onmouseleave = function(){
+        // for(var i = 0; i < spanNodes.length; i++){
+        //   spanNodes[i].style.opacity = '0'
+        // }
+        spanNodes[0].style.opacity = '0'
+        spanNodes[1].style.opacity = '0'
+        let autoTimer = setInterval(function () {nextPage(true)},2000)
+      }
+      for(let i = 0; i < iconList.length; i++){
+        iconList[i].onclick = function(){
+          iconList[i].index = i
+          for(let j = 0; j < iconList.length; j++){
+            iconList[j].className = ''
+          }
+          this.className = 'current'
+          nextPage(this.index)
+        }
+      }
+      prev.onclick = function(){
+        nextPage(false)
+      }
+      next.onclick = function(){
+        nextPage(true)
+      }
+      // 自动轮播
+      let autoTimer = setInterval(function () {
+        nextPage(true)
+      },2000)
+      // 点击小圆点切换图片
+      function nextPage(next){
+        if(isMove) return
+        isMove = true
+        if(typeof next === 'boolean'){
+
+          var offset = next?-PAGE_WIDTH:PAGE_WIDTH
+        }else{
+          // 当前点击索引
+          var offset = -(next - index)*PAGE_WIDTH
+        }
+        // 总偏移量 true为负  false为正
+        // 单词偏移 = 总偏移 / （总时长 / 帧时长）
+        let itemOffset = offset / (time / itemTime)
+        let left = carouselWrap.offsetLeft
+        let targetLeft = left + offset   
+        let timer = setInterval(function(){
+          left+=itemOffset
+          if(left === targetLeft){
+            clearInterval(timer)
+            // 边界值判断
+            if(left === 0){
+              left = -show_img * PAGE_WIDTH
+            }else if(left === -(show_img+1)*PAGE_WIDTH){
+              left = -PAGE_WIDTH
+            }
+            isMove = false
+          }
+          carouselWrap.style.left=left+'px'
+        },itemTime)
+        
+         // 当前位置+总偏移 = 终点 
+        //  carouselWrap.style.left = targetLeft+'px'
+        autoIcon(next)
+      }
+      function autoIcon(next) {
+        iconList[index].className = ''
+        if(typeof next === 'boolean'){
+          var targetIndex = next ? ++index : --index
+        }else{
+        // 当前点击索引
+          iconList[next].className = 'current'
+          var targetIndex = next 
+        }
+        if(targetIndex > iconList.length - 1){
+          targetIndex = 0
+        }else if(targetIndex < 0 ){
+          targetIndex = iconList.length - 1
+        }
+        iconList[targetIndex].className = 'current'
+        index = targetIndex
+      }
+
+      // 显示区域容器（移入移出的时候需要停止和重启自动轮播  控制左右两个按钮的隐藏）   
+      // 小圆点集合
+       
+    }
+  </script>
+</body>
+</html>

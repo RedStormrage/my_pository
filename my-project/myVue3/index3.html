@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    let app = Vue.createApp({
+      data(){
+        return {
+          message: 'hello world',
+          name:'title',
+          event: 'click'
+        }
+      },
+      methods: {
+        handleClick1(){
+          console.log('click')
+        }
+      },
+      // []中可以将return对象中的name当作属性来使用，此种叫动态属性，事件也可以
+      // @click.prevent阻止跳转默认行为，并且触发事件
+      template:`
+      <div :[name]="message" @[event]="handleClick1">{{message}}</div>
+      <form action="https://www.baidu.com" @click.prevent="handleClick1">
+          <button type="submit  ">提交</button>
+        </form>
+      `
+
+
+      async getDataMessage(){
+        let result = await axios.get('/index/message')
+        console.log(result.data)
+      }
+    })
+    app.mount("#root")
+  </script>
+</body>
+</html>

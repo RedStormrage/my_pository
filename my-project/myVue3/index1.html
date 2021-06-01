@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    // createApp 表示创建一个Vue应用
+    // 传入的参数表示，这个应用最外层的组件，应该如何展示
+    // mvvm设计模式，m-> model数据，v -> view 视图，vm -> viewModel 视图数据连接层
+    let app = Vue.createApp({
+      data(){
+        return {
+          message: 'hello world'
+        }
+      },
+      beforeCreate(){
+        // 在实例生成之前执行
+        console.log('beforeCreate')
+      },
+      created(){
+        // 实例生成之后执行
+        console.log('created')
+      },
+      beforeMount(){
+        // 模板挂载前执行或者组件内容渲染之前执行
+        console.log('beforeMount')
+      },
+      mounted(){
+        // 模板挂载之后执行或者组件内容渲染之后执行
+        console.log('mounted')
+      },
+      beforeUpdate () {
+        // 数据更新之前触发，此时打印的话数据还是变更之前
+        console.log('beforeUpdate')
+      },
+      update(){
+        // 数据变更之后触发，此时如果打印数据，数据就是更新后的了
+        console.log('update')
+      },
+      beforeUnmount(){
+        // 组件销毁之前执行，此时数据还未被销毁，还能拿到数据
+        console.log('beforeUnmount')
+      },
+      unmount(){
+        // 组件销毁之后，此时数据和模板已经被销毁，打印显示undefined
+        console.log('unmount')
+      },
+      template:`<div>{{message}}</div>`
+      
+    }) 
+    // vm就是vue应用的根组件
+    const vm = app.mount("#root")
+  </script>
+</body>
+</html>

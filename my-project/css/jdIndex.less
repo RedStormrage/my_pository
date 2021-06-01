@@ -54,22 +54,21 @@
                         padding: 0 7px 0 7px;
                         border: 1px solid transparent;
                         position: relative;
-                        z-index: 11;
                         // 掩盖
                         .conceal{
-                            width: 100%;
-                            height: 1px;
+                            width: 56px;
+                            height: 2px;
                             background-color:white;
                             position: absolute;
                             z-index: 30;
-                            left:-1px;
+                            left:1px;
                             top:28px;
                             display:none;
                         }
                          // 下拉层
                         .citys_container{
                             width: 319px;
-                            height: 435px;
+                            height: 442px;
                             background-color: #fff;
                             border:solid 1px  rgb(204, 204, 204);
                             // 设置阴影
@@ -77,13 +76,29 @@
                             position: absolute;
                             top: 28px;
                             left:-1px;
-                            // display:none;
+                            display:none;
                             visibility:hidden;
                             opacity: 0;
+                            div{
+                                width:100%;
+                                height: 100%;
+                                box-sizing: border-box;
+                                padding: 10px;
+                            }
                             ul{
-                                display: flex;
-                                justify-content:space-around;
-                                margin-top: 10px;
+                                // display: flex;
+                                // flex-flow:wrap;
+                                // justify-content:space-around;
+                                li{
+                                    padding: 2px 0 ;
+                                    width: 59px;
+                                    text-align:start;
+                                    float:left;
+                                    a{
+                                        font:12px;
+                                        padding:0px 7px
+                                    }
+                                }
                             }
                         }
                         
@@ -109,7 +124,7 @@
                     float: right;
                     ul{
                         li{
-                            margin:0 0 0 3px;
+                            padding: 0 7px;
                             border: 1px solid transparent;
                         }
                         display:flex;
@@ -122,7 +137,40 @@
                             width: 1px;
                             height: 10px;
                             background-color: #CCCCCC;
-                            margin: 11px 10px 0
+                            margin: 11px 5px 0
+                        }
+                        .pulldown{
+                            position: relative;
+                            
+                            .myJd{
+                                border:1px solid red;
+                                display:none;
+                                position: absolute;
+                                width: 161px;
+                                height: 161px;
+                                top: 29px;
+                                left: -1px;
+                            }
+                            .conceal{
+                                width: 100%;
+                                height: 1px;
+                                background-color: #fff;
+                                position: absolute;
+                                top:29px;
+                                left:1px;
+                                z-index: 30;
+                                display:none;
+                            }
+                        }
+                        .pulldown:hover{
+                            background-color: #fff;
+                            border:1px solid red;
+                            border-bottom: none;
+                        }
+                        .pulldown:hover .myJd,
+                        .pulldown:hover .conceal{
+                            background-color: #fff;
+                            display: block;
                         }
                     }
                 }

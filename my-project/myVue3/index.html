@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    let app = Vue.createApp({
+      data(){
+        return {
+          content:"",
+          contents: []
+        }
+      },
+      methods: {
+        addContent(){
+          this.contents.push(this.content)
+        }
+      },
+      template:`<div>
+          <input type="" v-model="this.content" />
+          <button @click="addContent">添加</button>
+            <ul>
+              <items v-for="(content,index) in contents" :key="content" :content="content" :index="index">{{content}}</items>
+            </ul>
+        </div>`
+    });
+
+    app.component("items",{
+      props:['content','index'],
+      template:`<li>{{content}}</li>`
+    })
+    app.mount("#root")
+  </script>
+</body>
+</html>
