@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <table width="100%"></table>
+  <script>
+//     var str = '<table width="437" a="1"></table>'
+//     const reg = /^<table(.*)>/i
+//     str.replace(reg, (v, p) => {
+//       let result = v.replace(p, '')
+//       console.log(result)
+//     })
+//     let text = '<table width="100%"></table>'
+      let name = 'aaa bbb ccc';
+      uw=name.replace(/\b\w+\b/g, function(word,a,b){
+        /*
+          第二个可以是一个回调函数
+          参数1: 匹配到的字符串
+          参数2: 匹配到的字符串的index
+          参数3: 当前被匹配到的字符串 'aaa bbb ccc'
+        */
+        console.log(word,a,b)
+        return word.substring(0,1).toUpperCase()+word.substring(1);}
+        );
+        console.log(uw);
+  </script>
+</body>
+</html>
