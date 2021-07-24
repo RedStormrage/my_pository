@@ -11,11 +11,11 @@ axios.defaults.baseURL = config[import.meta.env.MODE].baseUrl
 axios.defaults.withCredentials = true
 // 请求头，headers信息
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers['token'] = localStorage.getItem('token') || ''
+axios.defaults.headers['token'] = localGet('token') || ''
 // 默认post请求，使用application/json形式
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
-// 请求拦截器，内部根据返回值，重新组装，同意管理。
+// 请求拦截器，内部根据返回值，重新组装，统一管理。
 axios.interceptors.response.use(res=>{
   if(typeof res.data !== 'object'){
     ElMessage.error('服务器异常！')
@@ -27,6 +27,7 @@ axios.interceptors.response.use(res=>{
     // 有响应的信息，我就弹出响应的信息
     if(res.data.message) ElMessage.error(res.data.message)
     if(res.data.resultCode === 419){
+      console.log(res.data.resultCode)
       // 如果code等于419就让他去登录界面
       router.push({ path: '/login'})
     }
@@ -37,3 +38,4 @@ axios.interceptors.response.use(res=>{
 })
 
 // 将封装的axios暴露出去
+export default axios
