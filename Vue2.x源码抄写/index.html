@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  body{
+    height: 2000px;
+    background-color: #bfc;
+  }
+</style>
+<body>
+  <script>
+
+  </script>
+  <div id="app">
+    <h3>{{person.name}}--{{person.age}}</h3>
+    <h3>{{person.fav}}</h3>
+    <ul>
+      <li>Bill</li>
+      <li>extracurricular</li>
+      <li>involved</li>
+    </ul>
+    <h3>{{msg}}</h3>
+    <h3 v-text='msg'></h3>
+    <h3 v-text='person.name'></h3>
+    <h3 v-html='htmlStr'></h3>
+    <input 
+    style="width:300px;height: 30px;background-color:#bfc;padding-left: 10px;" 
+    type='text' v-model="msg"></input>
+    <button v-on:click="handleClick">点我继续</button>
+    <button @click="handleClick">点我继续</button>
+
+  </div>
+  <script src='./Observer.js'></script>
+  <script src='./Mvue.js'></script>
+  <script>
+    let vm = new Mvue({
+      el:'#app',
+      data:{
+        htmlStr: '<div>阿斯兰</div>',
+        person: {
+          name: '刘华强GitHub',
+          fav: '姑娘',
+          age: 18,
+        },
+        msg: 'mark'
+      },
+      methods:{
+        handleClick(){
+          this.person.name = '老王'
+          alert('今天天气真不错')
+        }
+      }
+    });
+
+    let flag = true
+    window.onscroll = function(){
+      // 初始进来的时候，是true
+      if(flag){
+      setTimeout(function(){
+        // 当定时器触发后，并执行了代码，最后再将flag设置为false
+        // 进入事件，遇到异步定时器并将其放置到任务队列中，执行后面的同步代码，将flga设置为false，所以此时你怎么都不会进入到if判断中。此时定时器事件到了，执行了定时器中的代码，又将flag设置为t
+          console.log('触发了')
+          flag = true
+        },1000)
+      }
+        flag = false
+    }
+  </script>
+</body>
+</html>
